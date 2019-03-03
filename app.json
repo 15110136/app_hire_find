@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "map-scroll",
-    "slug": "map-scroll",
+    "name": "hire-find",
+    "slug": "hire-find",
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": [
@@ -12,8 +12,8 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "image": "./assets/logo.png",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -24,6 +24,8 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": "app hire find",
+    "githubUrl": "https://github.com/15110136/app_hire_find.git"
   }
 }
