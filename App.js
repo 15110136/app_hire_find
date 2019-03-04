@@ -30,6 +30,7 @@ export default class App extends Component {
     super(props)
   
     this.state = {
+      error:null,
       isSplashReady: false,
     isAppReady: false,
       markers: [
@@ -70,12 +71,15 @@ export default class App extends Component {
           image: Images[3],
         },
       ],
-      region: {
-        latitude: 10.848970,
-        longitude: 106.770910,
-        latitudeDelta: 0.04864195044303443,
-        longitudeDelta: 0.040142817690068,
-      },
+      // region: {
+      //   latitude: 10.848970,
+      //   longitude: 106.770910,
+      //   latitudeDelta: 0.04864195044303443,
+      //   longitudeDelta: 0.040142817690068,
+      // },
+      region: null,
+      lastLat: null,
+      lastLong: null,
     }
   }
   
@@ -85,6 +89,18 @@ export default class App extends Component {
     this.animation=new Animated.Value(0);
   }
   componentDidMount(){
+    this.watchID = navigator.geolocation.watchPosition((position) => {
+      // Create the object to update this.state.mapRegion through the onRegionChange function
+      let region = {
+        latitude:       position.coords.latitude,
+        longitude:      position.coords.longitude,
+        latitudeDelta:  0.00922*1.5,
+        longitudeDelta: 0.00421*1.5
+      }
+      this.onRegionChange(region, region.latitude, region.longitude);
+    });
+    
+
     this.animation.addListener(({value})=>{
       let index=Math.floor(value/CARD_WIDTH+0.3);
       if(index>=this.state.markers.length){
@@ -108,6 +124,29 @@ export default class App extends Component {
       },10);
     });
   }
+  onRegionChange(region, lastLat, lastLong) {
+    this.setState({
+      region: region,
+      // If there are no new values set use the the current ones
+      lastLat: lastLat || this.state.lastLat,
+      lastLong: lastLong || this.state.lastLong
+    });
+  }
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchID);
+  }
+  onMapPress(e) {
+    console.log(e.nativeEvent.coordinate.longitude);
+    let region = {
+      latitude:       e.nativeEvent.coordinate.latitude,
+      longitude:      e.nativeEvent.coordinate.longitude,
+      latitudeDelta:  0.00922*1.5,
+      longitudeDelta: 0.00421*1.5
+    }
+    
+    this.onRegionChange(region, region.latitude, region.longitude);
+  }
+  
 
   render() {
     const interpolations=this.state.markers.map((marker,index)=>{
@@ -132,20 +171,27 @@ export default class App extends Component {
       <View style={styles.container}>
         <MapView 
           ref={map=>this.map=map}
-          initialRegion={this.state.region}
+          region={this.state.region}
           style={styles.container}
+          showsUserLocation={true}
         >
-          {this.state.markers.map((marker,index)=>{
-            const scaleStyle = {
-              transform: [
-                {
-        scale: interpolations[index].scale,
-      },
-    ],
-  };
-          const opacityStyle = {
-            opacity: interpolations[index].opacity,
-          };
+              {this.state.markers.map((marker,index)=>{
+                const scaleStyle = {
+                  transform: [{scale: interpolations[index].scale,},],};
+              const opacityStyle = {
+                opacity: interpolations[index].opacity,
+              };
+          <MapView.Marker
+            coordinate={{
+              latitude: (this.state.lastLat + 0.00050) || -36.82339,
+              longitude: (this.state.lastLong + 0.00050) || -73.03569,
+            }}>
+            <View>
+              <Text style={{color: '#000'}}>
+                { this.state.lastLong } / { this.state.lastLat }
+              </Text>
+            </View>
+          </MapView.Marker>
         return(
           <MapView.Marker key={index} coordinate={marker.coordinate} >
             <Animated.View style={[styles.markerWrap, opacityStyle]}>
@@ -153,8 +199,7 @@ export default class App extends Component {
               <View style={styles.marker} />
             </Animated.View>
           </MapView.Marker>
-        )
-})}
+        )})}
         </MapView>
 
         <Animated.ScrollView
