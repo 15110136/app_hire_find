@@ -136,7 +136,6 @@ export default class App extends Component {
     navigator.geolocation.clearWatch(this.watchID);
   }
   onMapPress(e) {
-    console.log(e.nativeEvent.coordinate.longitude);
     let region = {
       latitude:       e.nativeEvent.coordinate.latitude,
       longitude:      e.nativeEvent.coordinate.longitude,
@@ -203,28 +202,27 @@ export default class App extends Component {
         </MapView>
 
         <Animated.ScrollView
-  horizontal
-  scrollEventThrottle={1}
-  showsHorizontalScrollIndicator={false}
-  snapToInterval={CARD_WIDTH}
-  onScroll={Animated.event(
-    [
-      {
-        nativeEvent: {
-          contentOffset: {
-            x: this.animation,
-          },
-        },
-      },
-    ],
-    { useNativeDriver: true }
-  )}
-  style={styles.scrollView}
-  contentContainerStyle={styles.endPadding}
->
+          horizontal
+          scrollEventThrottle={1}
+          showsHorizontalScrollIndicator={false}
+          snapToInterval={CARD_WIDTH}
+          onScroll={Animated.event(
+            [
+              {
+                nativeEvent: {
+                  contentOffset: {
+                    x: this.animation,
+                  },
+                },
+              },
+            ],
+            { useNativeDriver: true }
+          )}
+          style={styles.scrollView}
+          contentContainerStyle={styles.endPadding}>
 
-{this.state.markers.map((marker,index)=>(
-  <View style={styles.card} key={index}>
+          {this.state.markers.map((marker,index)=>(
+            <View style={styles.card} key={index}>
               <Image
                 source={marker.image}
                 style={styles.cardImage}
@@ -237,8 +235,8 @@ export default class App extends Component {
                 </Text>
               </View>
             </View>
-))}
-</Animated.ScrollView>
+          ))}
+        </Animated.ScrollView>
       </View>
     );
   }
