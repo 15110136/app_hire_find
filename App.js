@@ -9,6 +9,7 @@ import {
   Animated,
   Image,
   Dimensions,
+  Button
 } from "react-native";
 
 import MapView from "react-native-maps";
@@ -89,11 +90,11 @@ export default class App extends Component {
     this.animation=new Animated.Value(0);
   }
   componentDidMount(){
-    this.watchID = navigator.geolocation.watchPosition((position) => {
+    this.watchID = navigator.geolocation.watchPosition(({coords}) => {
       // Create the object to update this.state.mapRegion through the onRegionChange function
       let region = {
-        latitude:       position.coords.latitude,
-        longitude:      position.coords.longitude,
+        latitude:       coords.latitude,
+        longitude:      coords.longitude,
         latitudeDelta:  0.00922*1.5,
         longitudeDelta: 0.00421*1.5
       }
@@ -122,6 +123,18 @@ export default class App extends Component {
           );
         }
       },10);
+    });
+  }
+
+  __findMe(){
+    navigator.geolocation.getCurrentPosition(({coords})=>{
+      let region = {
+        latitude:       coords.latitude,
+        longitude:      coords.longitude,
+        latitudeDelta:  0.00922*1.5,
+        longitudeDelta: 0.00421*1.5
+      }
+      this.onRegionChange(region,region.latitude,region.longitude);
     });
   }
   onRegionChange(region, lastLat, lastLong) {
@@ -200,6 +213,16 @@ export default class App extends Component {
           </MapView.Marker>
         )})}
         </MapView>
+        <View
+        style={{
+            position: 'absolute',//use absolute position to show button on top of the map
+            top: '40%', //for center align
+            alignSelf: 'flex-end' ,//for align to right
+            backgroundColor:'cyan'
+        }}
+    >
+        <Button onPress={()=>this.__findMe()} title="Find Me"/>
+    </View>
 
         <Animated.ScrollView
           horizontal
