@@ -2,19 +2,19 @@
   "expo": {
     "name": "hire-find",
     "slug": "hire-find",
-    "privacy": "public",
+    "description": "App find ITer",
+    "icon": "./assets/images/icon.png",
     "sdkVersion": "32.0.0",
-    "platforms": [
-      "ios",
-      "android"
-    ],
+    "platforms": ["ios", "android"],
     "version": "1.0.0",
+    "githubUrl":"https://github.com/15110136/app_hire_find.git",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "privacy": "public",
+    "primaryColor": "#07CCBA",
     "splash": {
-      "image": "./assets/logo.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#191919 ",
+      "image": "./assets/images/splash.png",
+      "resizeMode": "cover"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -25,7 +25,17 @@
     "ios": {
       "supportsTablet": true
     },
-    "description": "app hire find",
-    "githubUrl": "https://github.com/15110136/app_hire_find.git"
+    "extra": {
+      "appName": "Hire&Find",
+      "developerName": "K15",
+      "googleAnalytics": "UA-131961084",
+      "social": {
+        "expoApp": "https://expo.io/@skempin/lyrics-king",
+        "github": "https://github.com/SKempin/Lyrics-King-React-Native",
+        "googlePlayStore": "https://play.google.com/store/apps/developer?id=SK+-+UK",
+        "iTunesStore": "https://www.stephenkempin.co.uk",
+        "portfolio": "https://www.stephenkempin.co.uk"
+      }
+    }
   }
 }
