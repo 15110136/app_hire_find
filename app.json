@@ -5,9 +5,12 @@
     "description": "App find ITer",
     "icon": "./assets/images/icon.png",
     "sdkVersion": "32.0.0",
-    "platforms": ["ios", "android"],
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "version": "1.0.0",
-    "githubUrl":"https://github.com/15110136/app_hire_find.git",
+    "githubUrl": "https://github.com/15110136/app_hire_find.git",
     "orientation": "portrait",
     "privacy": "public",
     "primaryColor": "#07CCBA",
@@ -23,7 +26,10 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.hirefind.ute",
+      "publishBundlePath": "ios/hire-find/Supporting/shell-app.bundle",
+      "publishManifestPath": "ios/hire-find/Supporting/shell-app-manifest.json"
     },
     "extra": {
       "appName": "Hire&Find",
@@ -36,6 +42,17 @@
         "iTunesStore": "https://www.stephenkempin.co.uk",
         "portfolio": "https://www.stephenkempin.co.uk"
       }
+    },
+    "isDetached": true,
+    "detach": {
+      "iosExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/ios-v2.10.2-sdk32.0.0-c59c23cd-1d49-49d2-a633-d03f9d554cf6.tar.gz",
+      "androidExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/android-v2.10.7-sdk32.0.0-3ff7f3bf-8e53-4d61-b963-1d7d92a77d79.tar.gz"
+    },
+    "scheme": "exp649877f47b874d4baf7523988e0531ab",
+    "android": {
+      "package": "hire.find",
+      "publishBundlePath": "android/app/src/main/assets/shell-app.bundle",
+      "publishManifestPath": "android/app/src/main/assets/shell-app-manifest.json"
     }
   }
 }
