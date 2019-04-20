@@ -7,21 +7,18 @@ import {
   Keyboard,
   SafeAreaView,
   StatusBar,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback, Text
 } from 'react-native';
 import * as Expo from 'expo';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 /* eslint-disable import/no-extraneous-dependencies */
 // import { EvilIcons } from '@expo/vector-icons';
 
-import LK_LOGO from '../assets/images/lk-logo.png';
+import LK_LOGO from '../assets/images/Icon-1024.png';
 import SK from '../assets/images/SK.png';
 
 // Config
 import colours from '../config/colours';
-//  Components
-// import Suggestions from '../components/Suggestions';
-import Credits from '../components/Credits';
 import MapInput from '../components/MapInput';
 
 
@@ -38,7 +35,7 @@ function cacheImages(images) {
 export default class SearchScreen extends React.Component {
   static get propTypes() {
     return {
-      // navigation: PropTypes.object.isRequired
+      navigation: PropTypes.object.isRequired
     };
   }
 
@@ -74,7 +71,7 @@ export default class SearchScreen extends React.Component {
     const {
       isReady, showLogo
     } = this.state;
-    // const { navigation } = this.props;
+    const { navigation } = this.props;
     if (!isReady) {
       return (
         <Expo.AppLoading
@@ -91,31 +88,14 @@ export default class SearchScreen extends React.Component {
           <View style={styles.container}>
             {showLogo && <Image style={styles.logo} source={LK_LOGO} />}
             <View style={{ flex: 1, alignItems: 'center' }}>
-              <View style={styles.searchContainer}>
-                <MapInput />
-                {/* <EvilIcons name="search" size={30} color="#07CCBA" />
-                <TextInput
-                  style={styles.TextInput}
-                  onChangeText={handleTextChange}
-                  value={inputValue}
-                  placeholder="Search your place"
-                  placeholderTextColor="#fff"
-                  clearButtonMode="always"
-                /> */}
+              <View>
+                <Text style={styles.text}>Nhập địa chỉ</Text>
               </View>
-              {/* {isSearching && <ActivityIndicator size="large" color="purple" />}
-              {locationResults.map(el => (
-                      <Suggestions
-                        {...el}
-                        key={el.id}
-                        fetchDetails={fetchDetails}
-                        style={styles.Suggestions}
-                        navigation={navigation}
-                      />
-                    ))} */}
+              <View style={styles.searchContainer}>
+                <MapInput navigation={navigation} />
+              </View>
+              <Text style={styles.text}>hoặc chọn vị trí hiện tại của bạn</Text>
             </View>
-
-            {showLogo && <Credits screen="Search" />}
           </View>
         </TouchableWithoutFeedback>
       </SafeAreaView>
@@ -125,6 +105,9 @@ export default class SearchScreen extends React.Component {
 
 //  Styles
 const styles = StyleSheet.create({
+  text: {
+    color: 'white'
+  },
   safeView: {
     flex: 1,
     backgroundColor: colours.primaryBlack

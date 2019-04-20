@@ -15,68 +15,72 @@ import {
 } from 'react-native';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
+import PropTypes from 'prop-types';
+import axios from 'axios';
 
 const Images = [
-  { uri: 'https://i.imgur.com/sNam9iJ.jpg' },
-  { uri: 'https://i.imgur.com/N7rlQYt.jpg' },
-  { uri: 'https://i.imgur.com/UDrH0wm.jpg' },
-  { uri: 'https://i.imgur.com/Ka8kNST.jpg' }
+  { uri: '../assets/images/citizen.png' },
+  { uri: '../assets/images/citizen.png' },
+  { uri: '../assets/images/citizen.png' },
+  { uri: '../assets/images/citizen.png' }
 ];
 
 const { width, height } = Dimensions.get('window');
 
 const CARD_HEIGHT = height / 4;
 const CARD_WIDTH = CARD_HEIGHT - 50;
+const API_URL = 'https://hire-find.herokuapp.com/api/iter';
 
 export default class Map extends Component {
+  static get propTypes() {
+    return {
+      navigation: PropTypes.object.isRequired
+    };
+  }
+
   constructor(props) {
     super(props);
     this.state = {
       markers: [
-        {
-          coordinate: {
-            latitude: 10.849740,
-            longitude: 106.770240
-          },
-          title: 'UTE HCMC',
-          description: 'That is my university',
-          image: Images[0]
-        },
-        {
-          coordinate: {
-            latitude: 10.844170,
-            longitude: 106.770320
-          },
-          title: 'Second Best Place',
-          description: 'This is the second best place in Portland',
-          image: Images[1]
-        },
-        {
-          coordinate: {
-            latitude: 10.846540,
-            longitude: 106.777820
-          },
-          title: 'Third Best Place',
-          description: 'This is the third best place in Portland',
-          image: Images[2]
-        },
-        {
-          coordinate: {
-            latitude: 10.848650,
-            longitude: 106.771490
-          },
-          title: 'Fourth Best Place',
-          description: 'This is the fourth best place in Portland',
-          image: Images[3]
-        }
+        // {
+        //   coordinate: {
+        //     latitude: 10.844170,
+        //     longitude: 106.770320
+        //   },
+        //   title: 'UTE HCMC',
+        //   description: 'That is my university',
+        //   image: Images[0]
+        // },
+        // {
+        //   coordinate: {
+        //     latitude: 10.844170,
+        //     longitude: 106.770320
+        //   },
+        //   title: 'Second Best Place',
+        //   description: 'This is the second best place in Portland',
+        //   image: Images[1]
+        // },
+        // {
+        //   coordinate: {
+        //     latitude: 10.846540,
+        //     longitude: 106.777820
+        //   },
+        //   title: 'Third Best Place',
+        //   description: 'This is the third best place in Portland',
+        //   image: Images[2]
+        // },
+        // {
+        //   coordinate: {
+        //     latitude: 10.848650,
+        //     longitude: 106.771490
+        //   },
+        //   title: 'Fourth Best Place',
+        //   description: 'This is the fourth best place in Portland',
+        //   image: Images[3]
+        // }
       ],
-      // region: {
-      //   latitude: 10.848970,
-      //   longitude: 106.770910,
-      //   latitudeDelta: 0.04864195044303443,
-      //   longitudeDelta: 0.040142817690068,
-      // },
+
       region: null,
       lastLat: null,
       lastLong: null
@@ -88,7 +92,7 @@ export default class Map extends Component {
     this.animation = new Animated.Value(0);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.watchID = navigator.geolocation.watchPosition(({ coords }) => {
       // Create the object to update this.state.mapRegion through the onRegionChange function
       // eslint-disable-next-line prefer-const
@@ -125,7 +129,7 @@ export default class Map extends Component {
     });
   }
 
-  __findMe() {
+  async __findMe() {
     navigator.geolocation.getCurrentPosition(({ coords }) => {
       let region = {
         latitude: coords.latitude,
@@ -135,6 +139,40 @@ export default class Map extends Component {
       };
       this.onRegionChange(region, region.latitude, region.longitude);
     });
+
+    const data = this.props.navigation.getParam('details').geometry.location;
+
+    await axios.get(`${API_URL}`,{
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      params: {
+        lat: data.lat,
+        lng: data.lng
+      },
+      match: {
+        hardware: true
+      },
+      sort: {
+        exp: -1
+      }
+    }).then(({data: {cops}}) => {
+      let res = cops;
+      console.log(res[0])
+      let newmark = {
+        coordinate: {
+          latitude: res[0].location.coordinates[1],
+          longitude: res[0].location.coordinates[0]
+        },
+        title: 'UTE HCMC',
+        description: 'That is my university',
+        image: Images[0]
+      };
+      this.setState({
+        markers: [...this.state.markers, newmark]
+      });
+      console.log(this.state);
+    }).catch(err => console.log(err));
   }
 
   onRegionChange(region, lastLat, lastLong) {
@@ -150,7 +188,7 @@ export default class Map extends Component {
     navigator.geolocation.clearWatch(this.watchID);
   }
 
-  onMapPress(e) {
+  onMapPress = (e) => {
     let region = {
       latitude: e.nativeEvent.coordinate.latitude,
       longitude: e.nativeEvent.coordinate.longitude,
@@ -179,6 +217,9 @@ export default class Map extends Component {
       });
       return { scale, opacity };
     });
+
+    // const { navigation } = this.props;
+    // const itemId = navigation.getParam('details');
     return (
       <View style={styles.container}>
         <MapView
@@ -186,6 +227,8 @@ export default class Map extends Component {
           region={this.state.region}
           style={styles.container}
           showsUserLocation
+          showsCompass
+          onPress={this.onMapPress}
         >
           {this.state.markers.map((marker, index) => {
             const scaleStyle = { transform: [{ scale: interpolations[index].scale }] };
@@ -193,7 +236,7 @@ export default class Map extends Component {
               opacity: interpolations[index].opacity
             };
               // eslint-disable-next-line no-unused-expressions
-              <MapView.Marker
+              <Marker
                 coordinate={{
                   latitude: (this.state.lastLat + 0.00050) || -36.82339,
                   longitude: (this.state.lastLong + 0.00050) || -73.03569
@@ -204,7 +247,7 @@ export default class Map extends Component {
                     { this.state.lastLong } / { this.state.lastLat }
                   </Text>
                 </View>
-              </MapView.Marker>;
+              </Marker>;
               return (
                 <MapView.Marker key={index} coordinate={marker.coordinate}>
                   <Animated.View style={[styles.markerWrap, opacityStyle]}>
@@ -250,7 +293,7 @@ export default class Map extends Component {
           {this.state.markers.map((marker, index) => (
             <View style={styles.card} key={index}>
               <Image
-                source={marker.image}
+                source={require('../assets/images/citizen.png')}
                 style={styles.cardImage}
                 resizeMode="cover"
               />
@@ -331,5 +374,18 @@ const styles = StyleSheet.create({
     position: 'absolute',
     borderWidth: 1,
     borderColor: 'rgba(130,4,150, 0.5)'
+  },
+  circle: {
+    width: 30,
+    height: 30,
+    borderRadius: 30 / 2,
+    backgroundColor: 'red',
+  },
+  pinText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 20,
+    marginBottom: 10
   }
 });
