@@ -1,4 +1,15 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD
+// import PropTypes from 'prop-types';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import keys from '../config/keys';
+
+
+export default class MapInput extends Component {
+  static get propTypes() {
+    return {
+      // notifyChange: PropTypes.object.isRequired
+=======
 import PropTypes from 'prop-types';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import keys from '../config/keys';
@@ -16,11 +27,16 @@ export default class MapInput extends Component {
   static get propTypes() {
     return {
       navigation: PropTypes.object.isRequired
+>>>>>>> master
     };
   }
 
   render() {
+<<<<<<< HEAD
+    // const { notifyChange } = this.props;
+=======
     const { navigation } = this.props;
+>>>>>>> master
     return (
       <GooglePlacesAutocomplete
         placeholder="Search"
@@ -30,17 +46,26 @@ export default class MapInput extends Component {
         keyboardAppearance="light"
         listViewDisplayed={false}
         fetchDetails
+<<<<<<< HEAD
+        onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
+          console.log(details);
+          // notifyChange(details.geometry.location);
+=======
         enablePoweredByContainer={false}
         renderDescription={row => row.description || row.formatted_address || row.name}
         onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
           navigation.navigate('Map', {
             details
           });
+>>>>>>> master
         }}
         query={{
           key: keys,
           language: 'vi'
         }}
+<<<<<<< HEAD
+        debounce={1000}
+=======
 
         currentLocation// Will add a 'Current location' button at the top of the predefined places list
         currentLocationLabel="Vị trí hiện tại"
@@ -65,6 +90,7 @@ export default class MapInput extends Component {
           }
         }}
         debounce={500}
+>>>>>>> master
       />
     );
   }

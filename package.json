@@ -1,8 +1,15 @@
 {
+<<<<<<< HEAD
+  "name": "lyrics-king",
+  "version": "1.0.3",
+  "private": true,
+  "author": "Stephen Kempin (https://stephenkempin.co.uk/)",
+=======
   "name": "app-hire-find",
   "version": "1.0.3",
   "private": true,
   "author": "K15",
+>>>>>>> master
   "license": "MIT",
   "keywords": [
     "expo",

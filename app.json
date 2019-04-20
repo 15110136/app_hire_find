@@ -3,7 +3,11 @@
     "name": "hire-find",
     "slug": "hire-find",
     "description": "App find ITer",
+<<<<<<< HEAD
+    "icon": "./assets/images/icon.png",
+=======
     "icon": "./assets/images/lk-logo.png",
+>>>>>>> master
     "sdkVersion": "32.0.0",
     "platforms": [
       "ios",
@@ -16,6 +20,45 @@
     "primaryColor": "#07CCBA",
     "splash": {
       "backgroundColor": "#191919 ",
+<<<<<<< HEAD
+      "image": "./assets/images/splash.png",
+      "resizeMode": "cover"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.hirefind.ute",
+      "publishBundlePath": "ios/hire-find/Supporting/shell-app.bundle",
+      "publishManifestPath": "ios/hire-find/Supporting/shell-app-manifest.json"
+    },
+    "extra": {
+      "appName": "Hire&Find",
+      "developerName": "K15",
+      "googleAnalytics": "UA-131961084",
+      "social": {
+        "expoApp": "https://expo.io/@skempin/lyrics-king",
+        "github": "https://github.com/SKempin/Lyrics-King-React-Native",
+        "googlePlayStore": "https://play.google.com/store/apps/developer?id=SK+-+UK",
+        "iTunesStore": "https://www.stephenkempin.co.uk",
+        "portfolio": "https://www.stephenkempin.co.uk"
+      }
+    },
+    "isDetached": true,
+    "detach": {
+      "iosExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/ios-v2.10.2-sdk32.0.0-c59c23cd-1d49-49d2-a633-d03f9d554cf6.tar.gz",
+      "androidExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/android-v2.10.7-sdk32.0.0-3ff7f3bf-8e53-4d61-b963-1d7d92a77d79.tar.gz"
+    },
+    "scheme": "exp649877f47b874d4baf7523988e0531ab",
+    "android": {
+      "package": "hire.find",
+      "publishBundlePath": "android/app/src/main/assets/shell-app.bundle",
+      "publishManifestPath": "android/app/src/main/assets/shell-app-manifest.json"
+=======
       "image": "./assets/images/lk-logo.png",
       "resizeMode": "cover"
     },
@@ -30,6 +73,7 @@
         "iTunesStore": "https://www.stephenkempin.co.uk",
         "portfolio": "https://www.stephenkempin.co.uk"
       }
+>>>>>>> master
     }
   }
 }

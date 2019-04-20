@@ -19,7 +19,6 @@ import SK from '../assets/images/SK.png';
 
 // Config
 import colours from '../config/colours';
-
 import MapInput from '../components/MapInput';
 
 

@@ -31,10 +31,17 @@ const { ...extra } = Expo.Constants.manifest.extra;
 
 // Main stack
 export const MainStack = createStackNavigator({
+<<<<<<< HEAD
+  Map: {
+    screen: Map,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Map',
+=======
   Search: {
     screen: SearchScreen,
     navigationOptions: ({ navigation }) => ({
       title: null,
+>>>>>>> master
       headerTransparent: true,
       headerLeft: (
         <Ionicons
@@ -47,10 +54,17 @@ export const MainStack = createStackNavigator({
       )
     })
   },
+<<<<<<< HEAD
+  Search: {
+    screen: SearchScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: null,
+=======
   Map: {
     screen: Map,
     navigationOptions: ({ navigation }) => ({
       title: 'Map',
+>>>>>>> master
       headerTransparent: true,
       headerLeft: (
         <Ionicons
@@ -135,6 +149,8 @@ export const RootStack = createDrawerNavigator(
             activeBackgroundColor={colours.highlightBlack}
             inactiveTintColor={colours.secondaryGrey}
             itemStyle={styles.itemStyle}
+<<<<<<< HEAD
+=======
             onItemPress={({ route }) => {
               switch (route.routeName) {
                 case 'Search':
@@ -148,6 +164,7 @@ export const RootStack = createDrawerNavigator(
               }
             }
           }
+>>>>>>> master
           />
         </SafeAreaView>
       </ScrollView>
