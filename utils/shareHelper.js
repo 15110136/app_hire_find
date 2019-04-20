@@ -11,7 +11,7 @@ const handleShare = (message, url, title, screen) => {
     {
       message,
       url,
-      title
+    
     },
     {
       // Android only:
